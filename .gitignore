@@ -1,0 +1,12 @@
+__pycache__
+.pytest_cache
+.venv
+venv
+.vscode
+src/__pycache__
+src/.pytest_cache
+src/.vscode
+src/audio/in/*
+src/audio/out/*
+.env
+tests
