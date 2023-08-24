@@ -1,4 +1,4 @@
-# Hex - Text to Speech Module
+# Vocalized - Text to Speech Module
 
 This is a simple api endpoint to communicate with the eleven labs api to generate speech from text. Run the server to setup the endpoint and ping it with your `text` and `voice_id` to generate and automatically play the audio.
 
