@@ -4,7 +4,7 @@ import pyperclip
 import time
 import loguru
 import os
-from src.voice_generation import main as voice_generation
+from src.voice_handler import main as voice_generation
 
 os.environ["DISPLAY"] = ":0"
 
@@ -28,7 +28,9 @@ def save_to_file():
 
     selected_text = pyperclip.paste()
     logger.info(f"selected text: {selected_text}")
-    voice_generation(voice_id_input="XrExE9yKIg1WjnnlVkGX", text_input=selected_text)
+    voice_generation(
+        voice_id="XrExE9yKIg1WjnnlVkGX", text=selected_text, out_path="./src/audio/out/"
+    )
     logger.info("request made")
     exit()
 

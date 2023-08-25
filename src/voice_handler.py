@@ -44,8 +44,8 @@ def main(
     if len(text_paths) > 1:
         audio_paths = []
         for i, path in enumerate(text_paths):
-            base_name = os.path.basename(path)
-            out_filename = f"{out_path}/{base_name}{i}.mp3"
+            base_name = os.path.basename(path).split(".")[0]
+            out_filename = f"src/audio/out/{base_name}{i}.mp3"
             with open(path, "r", encoding="utf-8") as file:
                 text = file.read()
                 response = api_requests(input_text=text, voice=voice_id)
@@ -63,11 +63,12 @@ def main(
         if not audio_files:
             raise ValueError("API request failed")
     out_file = "audio.mp3"
-    segements = AudioSegment.empty()
+    segments = AudioSegment.empty()
     for file in audio_files:
-        segements += AudioSegment.from_mp3(file)
-    segements.export(out_file, format="mp3")
-    out_file = save_file(outname=out_file, out_dir=out_path)
+        segments += AudioSegment.from_mp3(file)
+        with open(out_file, "wb", buffering=CHUNK_SIZE) as file:
+            file.write(segments.get_raw_data())
+            file.close()
     play_audio(out_file)
     return out_file
 
@@ -91,10 +92,8 @@ def combine_audio(audio_paths: List[str], out_dir: str = "./src/audio/out"):
     combined_audio = AudioSegment.empty()
     file_path = None
     for file in audio_paths:
-        file_path = file
-        file_name = os.path.basename(file_path)
-        file_path = os.path.join(out_dir, file_name)
-        audio = AudioSegment.from_mp3(file_path)
+        file_path = "src/audio/out/combined_chunks.mp3"
+        audio = AudioSegment.from_mp3(file)
         combined_audio += audio
     combined_audio.export(file_path, format="mp3")
     logger.info(f"Saved combined audio to {file_path}")
