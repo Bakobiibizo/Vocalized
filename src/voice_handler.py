@@ -56,12 +56,10 @@ def main(
                 if not response:
                     raise ValueError("API request failed")
         audio_files = combine_audio(audio_paths, out_path)
-        if not audio_files:
-            raise ValueError("API request failed")
     else:
         audio_files = [voice_gen(text_input=text, voice_id_input=voice_id)]
-        if not audio_files:
-            raise ValueError("API request failed")
+    if not audio_files:
+        raise ValueError("API request failed")
     out_file = "audio.mp3"
     segments = AudioSegment.empty()
     for file in audio_files:

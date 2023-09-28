@@ -24,16 +24,16 @@ def stream_text_chunker(chunks: Iterator[str]) -> Iterator[str]:
     buffer = ""
     for text in chunks:
         if buffer.endswith(splitters):
-            yield buffer if buffer.endswith(" ") else buffer + " "
+            yield buffer if buffer.endswith(" ") else f"{buffer} "
             buffer = text
         elif text.startswith(splitters):
             output = buffer + text[0]
-            yield output if output.endswith(" ") else output + " "
+            yield output if output.endswith(" ") else f"{output} "
             buffer = text[1:]
         else:
             buffer += text
     if buffer != "":
-        yield buffer + " "
+        yield f"{buffer} "
 
 
 def save_chunks(
