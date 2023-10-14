@@ -61,5 +61,5 @@ def root(data: Data):
 
 
 if __name__ == "__main__":
-    server = Server(Config(app=app, host="localhost", port=8000, reload=True))
+    server = Server(Config(app=app, host="localhost", port=9003, reload=True))
     server.run()
